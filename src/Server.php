@@ -1,5 +1,9 @@
 <?php
 
+require_once('Request.php');
+require_once('Response.php');
+
+
 class Server {
 
     public function __construct(){
@@ -23,17 +27,13 @@ class Server {
         $raddr = null;
         $rport = null;
         socket_getpeername($newSock, $raddr, $rport);
-        Log::info("Received Connection from $raddr:$rport\n");
 
+        // $request = new Request();
         $request['raddr'] = $raddr;
         $request['rport'] = $rport;
 
         $rawRequest = socket_read($newSock, 1024);
-        Log::debug("rawRequest:$rawRequest");
-
-
         $rawLines = preg_split('/\R/', $rawRequest);
-        Log::debug('rawLines:', $rawLines);
 
         $startline = explode(' ', $rawLines[0]);
         if (count($startline) != 3) throw new Exception('startline should contain 3 parts'. json_encode($startline));
@@ -61,25 +61,25 @@ class Server {
 
         Log::debug('request', $request);
 
-
-        // assume it's a file to be read
-        $filepath = getcwd() . $request['target'];
-        if(!file_exists($filepath)) {
-            throw new Exception("File can't be found: $filepath");
+        if ($request['target'] == '/') {
+            $filepath = getcwd() ."/index.html";
+        } else {
+            $filepath = getcwd() . $request['target'];
         }
 
-        $fileContents = file_get_contents($filepath);
+        // assume the request asks a file to be read
+        $response = new Response();
+        $response->setContentType('text/html');
 
-        $rawResponse = [
-            'HTTP/1.1 200 OK',
-            'Content-Type: text/html',
-            'Content-Length: '. strlen($fileContents),
-            '',
-            $fileContents
-        ];
+        if(file_exists($filepath)) {
+            $body = file_get_contents($filepath);
+            $response->setResponseCode(200);
+            $response->setBody($body);
+        } else {
+            $response->setResponseCode(404);
+        }
 
-        Log::debug("rawResponse: $rawResponse");
-        socket_write($newSock, implode(EOL_PHP, $rawResponse));
+        socket_write($newSock, $response->getMessage());
         socket_close($newSock);
     }
 

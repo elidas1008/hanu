@@ -42,4 +42,4 @@ class Log{
     }
 }
 
-// $log = new Log(true);
+Log::init(true);
