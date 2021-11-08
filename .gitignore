@@ -3,3 +3,7 @@ vendor
 composer.lock
 src/spiekbriefje.php
 src/simpleTests.php
+experiments
+public
+runPHPunit
+.phpunit.result.cache

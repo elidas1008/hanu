@@ -27,44 +27,16 @@ class Server {
         $raddr = null;
         $rport = null;
         socket_getpeername($newSock, $raddr, $rport);
-
-        // $request = new Request();
-        $request['raddr'] = $raddr;
-        $request['rport'] = $rport;
-
         $rawRequest = socket_read($newSock, 1024);
-        $rawLines = preg_split('/\R/', $rawRequest);
 
-        $startline = explode(' ', $rawLines[0]);
-        if (count($startline) != 3) throw new Exception('startline should contain 3 parts'. json_encode($startline));
+        $request = new Request();
+        $request->setRemoteInfo($raddr, $rport);
+        $request->parseRawRequest($rawRequest);
 
-        // method
-        $startline[0] = strtoupper($startline[0]);
-        switch ($startline[0]) {
-            case "GET":
-                $request['method'] = $startline[0];
-                break;
-            default:
-                throw new Exception("non supported method: ". $startline[0]);
-                break;
-        }
-
-        // target
-        if (substr($startline[1], 0, 1) !== '/') throw new Exception("target not formed properly: '".$startline[1]."'");
-        $request['target'] = $startline[1];
-
-        // http version
-        $request['httpVersion'] = $startline[2];
-
-        // headers
-        $request['headers'] = array_splice($rawLines, 1);
-
-        Log::debug('request', $request);
-
-        if ($request['target'] == '/') {
-            $filepath = getcwd() ."/index.html";
+        if ($request->getTarget() == '/') {
+            $filepath = getcwd() ."/public/index.html";
         } else {
-            $filepath = getcwd() . $request['target'];
+            $filepath = getcwd() ."/public/". $request->getTarget();
         }
 
         // assume the request asks a file to be read
