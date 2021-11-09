@@ -46,6 +46,7 @@ class Server {
         if(file_exists($filepath)) {
             $body = file_get_contents($filepath);
             $response->setResponseCode(200);
+            $response->setHeaders(["Set-Cookie" => "test"]);
             $response->setBody($body);
         } else {
             $response->setResponseCode(404);

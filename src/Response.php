@@ -6,8 +6,13 @@ class Response {
     private $startline = null;
     private $contentType = null;
     private $body = null;
+    private $headers = null;
 
     public function __construct() {
+    }
+
+    public function setHeaders(array $headers) {
+        $this->headers = $headers;
     }
 
     public function setContentType($type) {
@@ -48,11 +53,16 @@ class Response {
             $this->startline,
             'Content-Type: '. $this->contentType,
             'Content-Length: '. strlen($this->body),
-            '',
-            $this->body
         ];
+        Log::debug('this.headers', $this->headers);
+        foreach((array) $this->headers as $name => $header) {
+            $rawResponse[] = "$name: $header";
+        }
+        $rawResponse[] = ""; //header-body separator
+        if (0 < strLen($this->body)) {
+            $rawResponse[] = $this->body;
+        }
 
-        Log::debug("rawResponse: ", $rawResponse);
         return implode(PHP_EOL, $rawResponse);
     }
 }
