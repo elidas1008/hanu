@@ -1,5 +1,8 @@
 <?php
 
+namespace server;
+use \Exception;
+
 class Request {
 
     private $raddr = null;
@@ -76,6 +79,6 @@ class Request {
 
     public function getHeader(string $headerName) {
         if (!array_key_exists($headerName, $this->headers)) return null;
-        return $this->headers[$headerName]; 
+        return $this->headers[$headerName];
     }
 }

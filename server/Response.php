@@ -1,5 +1,8 @@
 <?php
 
+namespace server;
+use \Exception;
+
 class Response {
 
     private $rawResponse = null;

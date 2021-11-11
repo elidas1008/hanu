@@ -1,5 +1,7 @@
 <?php
 
+namespace server;
+
 class Log{
 
     static private $fh = null;
@@ -34,7 +36,7 @@ class Log{
     }
 
     static private function write($type, $str) {
-        $dt = new DateTime();
+        $dt = new \DateTime();
         $timestamp = $dt->format("Y-m-d H:i:s");
         $logLine = "$timestamp [$type]: $str". PHP_EOL;
         fwrite(Log::$fh, $logLine);
