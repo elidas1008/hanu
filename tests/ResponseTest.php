@@ -1,13 +1,8 @@
 <?php
 use PHPUnit\Framework\TestCase;
+use server\Response;
 
-final class TestResponse extends TestCase {
-    public function testSetHeaders_withBody()
-    {
-    }
-    public function testSetCookie_expiration()
-    {
-    }
+final class ResponseTest extends TestCase {
     public function testSetHeaders()
     {
         $expCookie = ['Cookie' => 'test'];

@@ -1,7 +1,8 @@
 <?php
 use PHPUnit\Framework\TestCase;
+use server\Request;
 
-final class TestRequest extends TestCase {
+final class RequestTest extends TestCase {
     public function testSetHeaders()
     {
         $headers = [

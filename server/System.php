@@ -3,18 +3,7 @@
 namespace server;
 require_once('vendor/autoload.php');
 
-// include "Log.php";
-// include "Server.php";
-
-// use Helpers;
-
-// require_once("Log.php");
-// require_once("Server.php");
-// require_once("Router.php");
-
-
-// Log::info("System started");
-$router = new Router();
+$router = Router::getInstance();
 $router->add("GET", "/", function(Request $request) {
     return "OK";
 });

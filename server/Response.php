@@ -57,7 +57,6 @@ class Response {
             'Content-Type: '. $this->contentType,
             'Content-Length: '. strlen($this->body),
         ];
-        Log::debug('this.headers', $this->headers);
         foreach((array) $this->headers as $name => $header) {
             $rawResponse[] = "$name: $header";
         }

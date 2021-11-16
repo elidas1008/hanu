@@ -7,8 +7,17 @@ class Router {
 
     private $routes = null; //[path][method]
 
-    public function __construct() {
+    // is singleton, fix later
+    private static ?Router $router = null;
+    protected function __construct() {}
+    protected function __clone() {}
 
+    public static function getInstance(): Router
+    {
+        if (null == self::$router) {
+            self::$router = new static();
+        }
+        return self::$router;
     }
 
     public function getHandler(Request $request) {
