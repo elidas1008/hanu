@@ -2,6 +2,7 @@
 use PHPUnit\Framework\TestCase;
 use server\Router;
 use server\Request;
+use server\CannotFindException;
 
 final class RouterTest extends TestCase {
     public function testAddGet()
@@ -24,4 +25,20 @@ final class RouterTest extends TestCase {
             call_user_func($handler, $request)
         );
     }
+
+    public function testCannotFindRoute()
+    {
+        $request = new Request();
+        $request->setTarget("/doesntexist");
+        $request->setMethod("GET");
+
+        $router = Router::getInstance();
+        $router->add("GET","/", function(Request $request) {
+            return "OK";
+        });
+
+        $this->expectException(CannotFindException::class);
+        $router->getHandler($request);
+    }
+
 }
