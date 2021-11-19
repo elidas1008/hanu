@@ -33,8 +33,12 @@ class Server {
         $request->setRemoteInfo($raddr, $rport);
         $request->parseRawRequest($rawRequest);
 
-        $handler = $this->router->getHandler($request);
-        $response = $this->runHandler($handler, $request);
+        try {
+            $handler = $this->router->getHandler($request);
+            $response = $this->runHandler($handler, $request);
+        } catch (CannotFindException $e) {
+            $response = Helpers::CannotFindResource($e->getMessage());
+        }
 
         socket_write($newSock, $response->getMessage());
         socket_close($newSock);
