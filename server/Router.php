@@ -6,7 +6,6 @@ class Router {
 
     private $routes = null; //[path][method]
 
-    // is singleton, fix later
     private static ?Router $router = null;
     protected function __construct() {}
     protected function __clone() {}
@@ -30,4 +29,5 @@ class Router {
 
         $this->routes[$path][$method] = $handler;
     }
+
 }

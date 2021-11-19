@@ -4,9 +4,10 @@ namespace server;
 require_once('vendor/autoload.php');
 
 $router = Router::getInstance();
-$router->add("GET", "/", function(Request $request) {
-    return "OK";
+$router->add("GET", "/", function() {
+    return Helper::html("./index.html");
 });
+
 
 $server = new Server($router);
 $server->run();

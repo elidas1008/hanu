@@ -2,7 +2,7 @@
 
 namespace server;
 
-class Helpers {
+class Helper {
 
     static public function CannotFindResource($name) {
         $response = new Response();
@@ -12,7 +12,7 @@ class Helpers {
         return $response;
     }
 
-    public function redirect($url) {
+    static public function redirect($url) {
 
         $response = new Response();
         $response->setResponseCode(302); // ?? which 3xx?
@@ -21,7 +21,7 @@ class Helpers {
         return $response->getMessage();
     }
 
-    public function view($view) {
+    static public function view($view) {
 
         $response = new Response();
 
@@ -29,12 +29,13 @@ class Helpers {
         return $resonse->getMessage();
     }
 
-    public function html($filepath) {
+    static public function html($filePath) {
         $response = new Response();
-        $response->setContentType('text/html');
+        $response->setContentType('text/html'); // this should be checked
 
-        if(file_exists($filepath)) {
-            $body = file_get_contents($filepath);
+        $filePath = self::getPublicResourcePath($filePath);
+        if(file_exists($filePath)) {
+            $body = file_get_contents($filePath);
             $response->setResponseCode(200);
             $response->setBody($body);
         } else {
@@ -42,5 +43,9 @@ class Helpers {
         }
 
         return $response;
+    }
+
+    static public function getPublicResourcePath($path) {
+        return "./public/$path";
     }
 }

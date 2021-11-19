@@ -7,3 +7,4 @@ experiments
 public
 runPHPunit
 .phpunit.result.cache
+.idea

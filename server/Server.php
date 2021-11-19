@@ -37,7 +37,7 @@ class Server {
             $handler = $this->router->getHandler($request);
             $response = $this->runHandler($handler, $request);
         } catch (CannotFindException $e) {
-            $response = Helpers::CannotFindResource($e->getMessage());
+            $response = Helper::CannotFindResource($e->getMessage());
         }
 
         socket_write($newSock, $response->getMessage());
@@ -48,8 +48,7 @@ class Server {
 
         $handlerResult = call_user_func($handler, $request);
 
-        // this the way to differentiate between helper function response and standard controller handlerResult?
-        if (is_a($handlerResult, 'Response')) return $handlerResult;
+        if ($handlerResult instanceof Response) return $handlerResult;
 
         $response = new Response();
         $response->setContentType('text/html');
