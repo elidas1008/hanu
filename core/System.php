@@ -1,6 +1,6 @@
 <?php
 
-namespace server;
+namespace core;
 require_once('vendor/autoload.php');
 
 $router = Router::getInstance();

@@ -1,7 +1,7 @@
 {
     "autoload": {
         "classmap": [
-            "server/"
+            "core/server/"
         ]
     },
     "require-dev": {

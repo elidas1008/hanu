@@ -1,6 +1,6 @@
 <?php
 
-namespace server;
+namespace core\server;
 
 class Server {
 
