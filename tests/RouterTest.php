@@ -1,8 +1,8 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use server\Router;
-use server\Request;
-use server\CannotFindException;
+use core\server\Router;
+use core\server\Request;
+use core\server\CannotFindException;
 
 final class RouterTest extends TestCase {
     public function testAddGet()

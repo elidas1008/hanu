@@ -7,6 +7,7 @@ class Server {
     private $router = null;
 
     public function __construct($router){
+        throw new CannotFindException();
         Log::debug("server starting");
         $this->router = $router;
 

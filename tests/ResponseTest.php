@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use server\Response;
+use core\server\Response;
 
 final class ResponseTest extends TestCase {
     public function testSetHeaders()

@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use server\Request;
+use core\server\Request;
 
 final class RequestTest extends TestCase {
     public function testSetHeaders()

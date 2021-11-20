@@ -1,7 +1,7 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use server\Helper;
-use server\Response;
+use core\server\Helper;
+use core\server\Response;
 
 final class HelperTest extends TestCase {
     public function testHtml()

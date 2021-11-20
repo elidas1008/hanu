@@ -1,6 +1,6 @@
 <?php
 
-namespace server\server;
+namespace core\server;
 use \Exception;
 
 class CannotFindException extends Exception
