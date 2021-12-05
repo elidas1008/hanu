@@ -1,4 +1,5 @@
 {
+    "name": "elidas1008/hanu",
     "autoload": {
         "classmap": [
             "server/"
